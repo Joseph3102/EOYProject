@@ -10,6 +10,10 @@ public class PlayerMovement : MonoBehaviour
     private SerialPort serialPort;
     private bool isSerialConnected = false;
 
+    [SerializeField]private float speed = 4;
+
+    [SerializeField]private float jump = 5;
+
 
     IEnumerator TryConnectSerialPortCont() {
      while (!isSerialConnected){
@@ -82,18 +86,33 @@ public class PlayerMovement : MonoBehaviour
     private void Update(){
 
 
+        float horizontalInput = Input.GetAxis("Horizontal");
 
 
+        if (Input.GetKey(KeyCode.Space) && Mathf.Abs(body.linearVelocity.y) < 0.01f)
+        {
+            body.linearVelocity = new Vector2(body.linearVelocity.x,jump);
+        }
+
+       body.linearVelocity = new Vector2(horizontalInput * speed,body.linearVelocity.y);
 
 
+        // flips player when moving left
+        if (horizontalInput > 0)
+        {
+            transform.localScale = new Vector3 (5,5,5);
+        } else if (horizontalInput < 0)
+        {
+            transform.localScale = new Vector3(-5,5,5);
+        }
 
-       // body.linearVelocity = new Vector2(Input.GetAxis("Horizontal"),body.linearVelocity.y);
+
 
     }
 
     private void moveLeft()
     {
-        body.linearVelocity = new Vector2(-2f, body.linearVelocity.y);
+        body.linearVelocity = new Vector2(-1f*speed, body.linearVelocity.y);
     }
 
     private void noMovement(){
@@ -102,7 +121,7 @@ public class PlayerMovement : MonoBehaviour
 
       private void moveRight()
     {
-        body.linearVelocity = new Vector2(2f, body.linearVelocity.y);
+        body.linearVelocity = new Vector2(1f*speed, body.linearVelocity.y);
     }
 
 
