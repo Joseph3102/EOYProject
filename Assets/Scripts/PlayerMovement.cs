@@ -10,6 +10,9 @@ public class PlayerMovement : MonoBehaviour
     private SerialPort serialPort;
     private bool isSerialConnected = false;
 
+    private float horizontalInputFromArduino = 0f;
+
+
     [SerializeField]private float speed = 4;
 
     [SerializeField]private float jump = 5;
@@ -20,7 +23,7 @@ public class PlayerMovement : MonoBehaviour
      
             
             try{
-                serialPort = new SerialPort("COM3", 9600);
+                serialPort = new SerialPort("COM5", 9600);
                 serialPort.Open();
                 serialPort.ReadTimeout = 50;
                 isSerialConnected = true;
@@ -86,7 +89,12 @@ public class PlayerMovement : MonoBehaviour
     private void Update(){
 
 
-        float horizontalInput = Input.GetAxis("Horizontal");
+       // float horizontalInput = Input.GetAxis("Horizontal");
+
+       float horizontalInput = horizontalInputFromArduino;
+       
+
+
 
 
         if (Input.GetKey(KeyCode.Space) && Mathf.Abs(body.linearVelocity.y) < 0.01f)
@@ -110,19 +118,21 @@ public class PlayerMovement : MonoBehaviour
 
     }
 
-    private void moveLeft()
-    {
-        body.linearVelocity = new Vector2(-1f*speed, body.linearVelocity.y);
-    }
+  private void moveLeft()
+{
+    horizontalInputFromArduino = -1f;
+}
 
-    private void noMovement(){
-         body.linearVelocity = new Vector2(0, body.linearVelocity.y);
-    }
+private void moveRight()
+{
+    horizontalInputFromArduino = 1f;
+}
 
-      private void moveRight()
-    {
-        body.linearVelocity = new Vector2(1f*speed, body.linearVelocity.y);
-    }
+private void noMovement()
+{
+    horizontalInputFromArduino = 0f;
+}
+
 
 
     void OnApplicationQuit()
