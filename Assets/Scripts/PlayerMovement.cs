@@ -62,6 +62,19 @@ public class PlayerMovement : MonoBehaviour
                     noMovement();
                 }
 
+                if (data == "Jump")
+                {
+                    if (Mathf.Abs(body.linearVelocity.y) < 0.01f)  // Only jump if on ground
+            {
+        body.linearVelocity = new Vector2(body.linearVelocity.x, jump);
+            }
+                } else if (data == "NoJump" && Mathf.Abs(body.linearVelocity.y) > 0.01f)
+                {
+                    // Do nothing or handle no jump state
+                } else if (data == "NoJump"){
+
+                }
+
 
 
                 }
@@ -97,10 +110,10 @@ public class PlayerMovement : MonoBehaviour
 
 
 
-        if (Input.GetKey(KeyCode.Space) && Mathf.Abs(body.linearVelocity.y) < 0.01f)
-        {
-            body.linearVelocity = new Vector2(body.linearVelocity.x,jump);
-        }
+        // if (Input.GetKey(KeyCode.Space) && Mathf.Abs(body.linearVelocity.y) < 0.01f)
+        // {
+        //     body.linearVelocity = new Vector2(body.linearVelocity.x,jump);
+        // }
 
        body.linearVelocity = new Vector2(horizontalInput * speed,body.linearVelocity.y);
 
