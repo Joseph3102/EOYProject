@@ -14,5 +14,8 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/LoseScreen.unity
     guid: eecafbcb8e1a38548aef1b97ad4315c6
+  - enabled: 1
+    path: Assets/Scenes/WinScreen.unity
+    guid: 832f2b071de117c428336a0a14839212
   m_configObjects: {}
   m_UseUCBPForAssetBundles: 0
